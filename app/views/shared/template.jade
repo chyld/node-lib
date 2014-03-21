@@ -13,7 +13,7 @@ html(class='no-js', lang='en')
     nav.top-bar
       ul.title-area
         li.name
-          h1: a(href="/") The Title
+          h1: a(href="/") Node Library
         li.toggle-topbar.menu-icon
           a(href="#") Menu
 
@@ -22,9 +22,12 @@ html(class='no-js', lang='en')
         ul.right
           li: a(href="/") Home
           li.divider
-          li: a(href="/") Register
-          li.divider
-          li: a(href="/") Login
+          if(user)
+            li: a(href="/logout")= user.email
+          else
+            li: a(href="/users/new") Register
+            li.divider
+            li: a(href="/login") Login
     .row
       .small-12.columns
         block content
@@ -34,4 +37,3 @@ html(class='no-js', lang='en')
     script(src='/js/vendor/lodash.js')
     script(src='/js/vendor/moment.js')
     script(src='/js/source/main.js')
-

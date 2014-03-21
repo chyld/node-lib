@@ -1,3 +1,30 @@
 extends ../shared/template
 
 block content
+  .row
+    .small-6.columns
+      form(action='/books', method='post', enctype='multipart/form-data')
+        label File
+        input(name='file', type='file')
+        label Cover
+        input(name='cover', type='file')
+        label Title
+        input(name='title', type='text', autofocus=true)
+        label Summary
+        textarea(name='summary')
+        label Tags
+        textarea(name='tags')
+        label Authors
+        input(name='authors', type='text')
+        label Publisher
+        input(name='publisher', type='text')
+        label Released
+        input(name='released', type='text')
+        label Edition
+        input(name='edition', type='text')
+        label ISBN-10
+        input(name='isbn10', type='text')
+        label ISBN-13
+        input(name='isbn13', type='text')
+        button.small.radius Create Book
+    .small-6.columns

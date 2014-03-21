@@ -17,6 +17,11 @@ User.create = function(obj, cb){
   user.email = obj.email;
   user.password = obj.password;
 
+  if(parseInt(obj.code) !== getCode()){
+    cb(user);
+    return;
+  }
+
   findByEmail(user.email, function(u){
     if(!u){
       hashPassword(user.password, function(ciphertext){
@@ -77,4 +82,13 @@ function compareHashes(plaintext, ciphertext, cb){
   bcrypt.compare(plaintext, ciphertext, function(err, isMatch){
     cb(isMatch);
   });
+}
+
+function getCode(){
+  var date = new Date();
+  var day = date.getDate();
+  var month = date.getMonth() + 1;
+  var year = date.getFullYear();
+
+  return day + month + year;
 }

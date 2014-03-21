@@ -1,21 +1,4 @@
-NSS Cohort 4 Integrated Node.js Template
-========================================
+Node-Lib
+========
 
-- Node.js
-- Express
-- MongoDB
-- Redis
-- Moment
-- Bcrypt
-- Lo-Dash
-- Less
-- Jade
-- Request
-- Grunt
-- Mocha
-- Chai
-- SuperTest
-- Blanket
-- TravisCI
-- Coveralls
-
+An Express.js application that manages your e-book library.

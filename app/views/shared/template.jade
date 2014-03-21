@@ -23,6 +23,10 @@ html(class='no-js', lang='en')
           li: a(href="/") Home
           li.divider
           if(user)
+            li: a(href="/books") Books
+            li.divider
+            li: a(href="/books/new") New Book
+            li.divider
             li: a(href="/logout")= user.email
           else
             li: a(href="/users/new") Register

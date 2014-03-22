@@ -29,8 +29,8 @@ Book.create = function(bobj, fobj, userId, cb){
   book.authors = bobj.authors.split(',').map(function(a){return a.trim();});
   book.authors = _.compact(book.authors);
 
-  book.file = parseFile(fobj.file, 'book', userId, book._id.toString());
-  book.cover = parseFile(fobj.cover, 'cover', userId, book._id.toString());
+  parseFile(book, fobj.file, 'data', userId, book._id.toString());
+  parseFile(book, fobj.cover, 'cover', userId, book._id.toString());
 
   insert(book, function(){
     cb();
@@ -43,15 +43,16 @@ function insert(book, cb){
   });
 }
 
-function parseFile(file, name, userId, bookId){
+function parseFile(book, file, name, userId, bookId){
+  var extension = path.extname(file.name);
   var files = __dirname + '/../files';
   var users = files + '/' + userId;
   var books = users + '/' + bookId;
-  var final = books + '/' + name;
+  var final = books + '/' + name + extension;
 
   if(!fs.existsSync(users)){fs.mkdirSync(users);}
   if(!fs.existsSync(books)){fs.mkdirSync(books);}
   fs.renameSync(file.path, final);
 
-  return path.normalize(final);
+  book[name] =  [path.normalize(final), file.type, file.size];
 }

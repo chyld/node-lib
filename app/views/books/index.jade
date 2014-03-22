@@ -1,3 +1,8 @@
 extends ../shared/template
 
 block content
+  each book in books
+    .book
+      .cover(style='background-image:url("' + book.cover[0] + '");')
+      .title= book.title
+      .download: a.button(href=book.data[0]) Download

@@ -26,7 +26,7 @@ function load(app, fn){
   app.get('/books/new', d, books.new);
   app.post('/books', d, books.create);
   app.get('/books', d, books.index);
-  app.get('/files/:userId/:bookId/:filename', d, books.stream);
+  app.get('/books/stream/:bookId/:filename', d, books.stream);
   console.log('Routes Loaded');
   fn();
 }

@@ -4,7 +4,7 @@ var Book = require('../models/book');
 var fs = require('fs');
 
 exports.index = function(req, res){
-  Book.findAll(function(books){
+  Book.findAll(req.session.userId, function(books){
     res.render('books/index', {title: 'Books', books: books});
   });
 };
@@ -20,5 +20,5 @@ exports.create = function(req, res){
 };
 
 exports.stream = function(req, res){
-  fs.createReadStream(Book.getPath(req.params)).pipe(res);
+  fs.createReadStream(Book.getPath(req.params, req.session.userId)).pipe(res);
 };

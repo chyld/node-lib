@@ -37,14 +37,16 @@ Book.create = function(bobj, fobj, userId, cb){
   });
 };
 
-Book.findAll = function(cb){
-  books.find().toArray(function(err, records){
+Book.findAll = function(userId, cb){
+  userId = Mongo.ObjectID(userId);
+
+  books.find({userId:userId}).toArray(function(err, records){
     cb(records);
   });
 };
 
-Book.getPath = function(obj){
-  return __dirname + '/../files/' + obj.userId + '/' + obj.bookId + '/' + obj.filename;
+Book.getPath = function(obj, userId){
+  return __dirname + '/../files/' + userId + '/' + obj.bookId + '/' + obj.filename;
 };
 
 function insert(book, cb){
@@ -59,11 +61,11 @@ function parseFile(book, file, name, userId, bookId){
   var users = files + '/' + userId;
   var books = users + '/' + bookId;
   var final = books + '/' + name + extension;
-  var relative = '/files/' + userId + '/' + bookId + '/' + name + extension;
+  var route = '/books/stream/'  + bookId + '/' + name + extension;
 
   if(!fs.existsSync(users)){fs.mkdirSync(users);}
   if(!fs.existsSync(books)){fs.mkdirSync(books);}
   fs.renameSync(file.path, final);
 
-  book[name] =  [relative, file.type, file.size];
+  book[name] =  [route, file.type, file.size];
 }

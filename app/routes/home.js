@@ -1,5 +1,5 @@
 'use strict';
 
 exports.index = function(req, res){
-  res.render('home/index', {title: 'Node Library'});
+  res.render('home/index', {title: 'Digital Library'});
 };

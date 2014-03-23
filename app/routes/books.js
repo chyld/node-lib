@@ -10,7 +10,7 @@ exports.index = function(req, res){
 };
 
 exports.new = function(req, res){
-  res.render('books/new', {title: 'New Book'});
+  res.render('books/new', {title: 'Add'});
 };
 
 exports.create = function(req, res){

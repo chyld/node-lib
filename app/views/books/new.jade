@@ -2,29 +2,42 @@ extends ../shared/template
 
 block content
   .row
-    .small-6.columns
-      form(action='/books', method='post', enctype='multipart/form-data')
-        label File
-        input(name='file', type='file')
-        label Cover
-        input(name='cover', type='file')
-        label Title
-        input(name='title', type='text', autofocus=true)
-        label Summary
-        textarea(name='summary')
-        label Tags
-        textarea(name='tags')
-        label Authors
-        input(name='authors', type='text')
-        label Publisher
-        input(name='publisher', type='text')
-        label Released
-        input(name='released', type='text')
-        label Edition
-        input(name='edition', type='text')
-        label ISBN-10
-        input(name='isbn10', type='text')
-        label ISBN-13
-        input(name='isbn13', type='text')
-        button.small.radius Create Book
-    .small-6.columns
+    .col-xs-12.col-md-4
+      form(role='form', action='/books', method='post', enctype='multipart/form-data')
+        .form-group
+          label File
+          input.form-control(name='file', type='file')
+        .form-group
+          label Cover
+          input.form-control(name='cover', type='file')
+        .form-group
+          label Title
+          input.form-control(name='title', type='text', autofocus=true)
+        .form-group
+          label Summary
+          textarea.form-control(name='summary')
+        .form-group
+          label Tags
+          textarea.form-control(name='tags')
+        .form-group
+          label Authors
+          textarea.form-control(name='authors')
+        .form-group
+          label Publisher
+          input.form-control(name='publisher', type='text')
+        .form-group
+          label Released
+          input.form-control(name='released', type='text')
+        .form-group
+          label Edition
+          input.form-control(name='edition', type='text')
+        .form-group
+          label ISBN-10
+          input.form-control(name='isbn10', type='text')
+        .form-group
+          label ISBN-13
+          input.form-control(name='isbn13', type='text')
+        button(type="submit").btn.btn-primary
+          span.glyphicon.glyphicon-plus
+          | &nbsp; Add
+    .col-md-8

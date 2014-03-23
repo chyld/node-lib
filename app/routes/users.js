@@ -3,7 +3,7 @@
 var User = require('../models/user');
 
 exports.new = function(req, res){
-  res.render('users/new', {title: 'New User'});
+  res.render('users/new', {title: 'Register'});
 };
 
 exports.create = function(req, res){
@@ -17,7 +17,7 @@ exports.create = function(req, res){
 };
 
 exports.login = function(req, res){
-  res.render('users/login', {title: 'User Login'});
+  res.render('users/login', {title: 'Login'});
 };
 
 exports.authenticate = function(req, res){

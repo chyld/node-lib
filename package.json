@@ -23,7 +23,9 @@
     "jade":            "*",
     "express-less":    "*",
     "request":         "*",
-    "express-session": "*"
+    "express-session": "*",
+    "resize":          "*",
+    "stream-buffers":  "*"
   },
   "devDependencies": {
     "grunt":                "*",

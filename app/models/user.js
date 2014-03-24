@@ -1,9 +1,9 @@
 'use strict';
 
 module.exports = User;
-var users = global.nss.db.collection('users');
-var bcrypt = require('bcrypt');
-var Mongo = require('mongodb');
+var users      = global.nss.db.collection('users');
+var bcrypt     = require('bcrypt');
+var Mongo      = require('mongodb');
 
 function User(){
 }

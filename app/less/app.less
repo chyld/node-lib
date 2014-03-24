@@ -1,4 +1,5 @@
 @bg-color: #cccccc;
+@book-height: 250px;
 
 body{
   background-image: url("/img/45degreee_fabric.png");
@@ -10,17 +11,15 @@ label{
 
 .book{
   float: left;
-  width: 200px;
+  width: @book-height * .66;
   border: 1px solid #959595;
-  border-radius: 7px;
   margin: 0px 25px 25px 0px;
 }
 
 .cover{
-  border-radius: 7px;
   background-color: #ffffff;
   background-position: center;
   background-size: cover;
   background-repeat: no-repeat;
-  height: 250px;
+  height: @book-height;
 }

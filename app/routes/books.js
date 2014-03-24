@@ -1,7 +1,6 @@
 'use strict';
 
 var Book = require('../models/book');
-var fs = require('fs');
 
 exports.index = function(req, res){
   Book.findAll(req.session.userId, function(books){
@@ -20,5 +19,7 @@ exports.create = function(req, res){
 };
 
 exports.stream = function(req, res){
-  fs.createReadStream(Book.getPath(req.params, req.session.userId)).pipe(res);
+  Book.getStream(req.params, req.session.userId, function(stream){
+    stream.pipe(res);
+  });
 };

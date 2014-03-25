@@ -1,0 +1,37 @@
+extends ../shared/template
+
+block content
+  .row
+    .col-xs-12.col-md-4
+      form(role='form', action='/books/' + book._id, method='post')
+        .form-group
+          label Title
+          input.form-control(name='title', type='text', value=book.title)
+        .form-group
+          label Summary
+          textarea.form-control(name='summary')= book.summary
+        .form-group
+          label Tags
+          textarea.form-control(name='tags')= book.tags.join(', ')
+        .form-group
+          label Authors
+          textarea.form-control(name='authors')= book.authors.join(', ')
+        .form-group
+          label Publisher
+          input.form-control(name='publisher', type='text', value=book.publisher)
+        .form-group
+          label Released
+          input.form-control(name='released', type='text', value=book.released)
+        .form-group
+          label Edition
+          input.form-control(name='edition', type='text', value=book.edition)
+        .form-group
+          label ISBN-10
+          input.form-control(name='isbn10', type='text', value=book.isbn10)
+        .form-group
+          label ISBN-13
+          input.form-control(name='isbn13', type='text', value=book.isbn13)
+        button(type="submit").btn.btn-primary
+          span.glyphicon.glyphicon-pencil
+          | &nbsp; Edit
+    .col-md-8

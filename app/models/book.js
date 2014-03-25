@@ -6,7 +6,6 @@ var _             = require('lodash');
 var fs            = require('fs');
 var path          = require('path');
 var Mongo         = require('mongodb');
-var streamBuffers = require('stream-buffers');
 var resize        = require('resize');
 
 function Book(){
@@ -14,35 +13,45 @@ function Book(){
 
 Book.create = function(bobj, fobj, userId, cb){
   var book = new Book();
-
   book._id = Mongo.ObjectID();
   book.userId = Mongo.ObjectID(userId);
-  trimString(bobj);
-
-  book.title = bobj.title;
-  book.summary = bobj.summary;
-  book.publisher = bobj.publisher;
-  book.released = bobj.released;
-  book.edition = bobj.edition;
-  book.isbn10 = bobj.isbn10;
-  book.isbn13 = bobj.isbn13;
-
-  book.tags = splitString(bobj.tags);
-  book.authors = splitString(bobj.authors);
-
+  makeBook(bobj, book);
   parseFile(book, fobj.file, 'data', userId, book._id.toString());
   parseFile(book, fobj.cover, 'cover', userId, book._id.toString());
-
-  insert(book, function(){
+  save(book, function(){
     cb();
   });
 };
 
-Book.findAll = function(userId, cb){
+Book.update = function(obj, book, cb){
+  makeBook(obj, book);
+  save(book, function(){
+    cb();
+  });
+};
+
+Book.findAllByUserId = function(userId, cb){
   userId = Mongo.ObjectID(userId);
 
   books.find({userId:userId}).toArray(function(err, records){
     cb(records);
+  });
+};
+
+Book.findAllByUserIdAndQuery = function(userId, query, cb){
+  userId = Mongo.ObjectID(userId);
+
+  books.find({userId:userId, tags:query.tag}).toArray(function(err, records){
+    cb(records);
+  });
+};
+
+Book.findByUserIdAndBookId = function(userId, bookId, cb){
+  userId = Mongo.ObjectID(userId);
+  bookId = Mongo.ObjectID(bookId);
+
+  books.findOne({_id:bookId, userId:userId}, function(err, record){
+    cb(record);
   });
 };
 
@@ -51,21 +60,49 @@ Book.getStream = function(obj, userId, cb){
   var isCover = /cover/.test(obj.filename);
 
   if(isCover){
-    resize(filename, 300, 300, {}, function(err, buf){
-      var bufStream = new streamBuffers.ReadableStreamBuffer({frequency: 10, chunkSize: 65536});
-      bufStream.put(buf);
-      cb(bufStream);
+    getThumbnail(filename, function(thumbnail){
+      cb(fs.createReadStream(thumbnail));
     });
   }else{
-    var fileStream = fs.createReadStream(filename);
-    cb(fileStream);
+    cb(fs.createReadStream(filename));
   }
 };
 
-function insert(book, cb){
-  books.insert(book, function(err, records){
+function makeBook(obj, book){
+  trimString(obj);
+
+  book.title = obj.title;
+  book.summary = obj.summary;
+  book.publisher = obj.publisher;
+  book.released = obj.released;
+  book.edition = obj.edition;
+  book.isbn10 = obj.isbn10;
+  book.isbn13 = obj.isbn13;
+
+  book.tags = splitString(obj.tags);
+  book.authors = splitString(obj.authors);
+}
+
+function save(book, cb){
+  books.save(book, function(err, count){
     cb();
   });
+}
+
+function getThumbnail(filename, cb){
+  var dir = path.dirname(filename);
+  var ext = path.extname(filename);
+  var thumb = dir + '/thumb' + ext;
+
+  if(fs.existsSync(thumb)){
+    cb(thumb);
+  }else{
+    resize(filename, 300, 300, {}, function(err, buf){
+      fs.writeFile(thumb, buf, function (err) {
+        cb(thumb);
+      });
+    });
+  }
 }
 
 function parseFile(book, file, name, userId, bookId){

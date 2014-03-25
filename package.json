@@ -24,8 +24,7 @@
     "express-less":    "*",
     "request":         "*",
     "express-session": "*",
-    "resize":          "*",
-    "stream-buffers":  "*"
+    "resize":          "*"
   },
   "devDependencies": {
     "grunt":                "*",

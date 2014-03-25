@@ -5,3 +5,8 @@ block content
     .book
       a(href=book.data[0])
         .cover(style="background-image:url('" + book.cover[0] + "');")
+      .edit
+        a.btn.btn-warning.btn-xs.btn-block(href='/books/' + book._id + '/edit') Edit
+      .tags
+        each tag in book.tags
+          a.btn.btn-info.btn-xs(href='/books/query?tag=' + tag)= tag

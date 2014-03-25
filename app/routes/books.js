@@ -39,7 +39,11 @@ exports.update = function(req, res){
 };
 
 exports.stream = function(req, res){
-  Book.getStream(req.params, req.session.userId, function(stream){
-    stream.pipe(res);
+  Book.findByUserIdAndBookId(req.session.userId, req.params.bookId, function(book){
+    Book.getStream(book, req.params.filename, function(stream, type, length){
+      res.setHeader('Content-Type', type);
+      res.setHeader('Content-Length', length);
+      stream.pipe(res);
+    });
   });
 };

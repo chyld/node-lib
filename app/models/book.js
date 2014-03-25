@@ -55,16 +55,16 @@ Book.findByUserIdAndBookId = function(userId, bookId, cb){
   });
 };
 
-Book.getStream = function(obj, userId, cb){
-  var filename = __dirname + '/../files/' + userId + '/' + obj.bookId + '/' + obj.filename;
-  var isCover = /cover/.test(obj.filename);
+Book.getStream = function(book, name, cb){
+  var filename = __dirname + '/../files/' + book.userId + '/' + book._id + '/' + name;
+  var isCover = /cover/.test(filename);
 
   if(isCover){
-    getThumbnail(filename, function(thumbnail){
-      cb(fs.createReadStream(thumbnail));
+    getThumbnail(book, filename, function(thumbnail, type, length){
+      cb(fs.createReadStream(thumbnail), type, length);
     });
   }else{
-    cb(fs.createReadStream(filename));
+    cb(fs.createReadStream(filename), book.data[1], book.data[2]);
   }
 };
 
@@ -89,17 +89,23 @@ function save(book, cb){
   });
 }
 
-function getThumbnail(filename, cb){
+function getThumbnail(book, filename, cb){
   var dir = path.dirname(filename);
   var ext = path.extname(filename);
   var thumb = dir + '/thumb' + ext;
 
   if(fs.existsSync(thumb)){
-    cb(thumb);
+    cb(thumb, book.thumb[1], book.thumb[2]);
   }else{
     resize(filename, 300, 300, {}, function(err, buf){
       fs.writeFile(thumb, buf, function (err) {
-        cb(thumb);
+        book.thumb = [];
+        book.thumb[0] = '/books/stream/' + book._id + '/thumb' + ext;
+        book.thumb[1] = book.cover[1];
+        book.thumb[2] = buf.length;
+        save(book, function(){
+          cb(thumb, book.thumb[1], book.thumb[2]);
+        });
       });
     });
   }

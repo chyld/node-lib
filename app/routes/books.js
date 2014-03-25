@@ -43,7 +43,7 @@ exports.stream = function(req, res){
     Book.getStream(book, req.params.filename, function(stream, type, length){
       res.setHeader('Content-Type', type);
       res.setHeader('Content-Length', length);
-      stream.pipe(res);
+      try{stream.pipe(res);}catch(e){}
     });
   });
 };

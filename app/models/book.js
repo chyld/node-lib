@@ -25,33 +25,35 @@ Book.create = function(bobj, fobj, userId, cb){
 
 Book.update = function(obj, book, cb){
   makeBook(obj, book);
+
   save(book, function(){
     cb();
   });
 };
 
-Book.findAllByUserId = function(userId, cb){
-  userId = Mongo.ObjectID(userId);
+Book.mark = function(book, cb){
+  book.mark = (book.mark && book.mark === 't') ? 'f' : 't';
 
-  books.find({userId:userId}).toArray(function(err, records){
-    cb(records);
+  save(book, function(){
+    cb();
   });
 };
 
-Book.findAllByUserIdAndQuery = function(userId, query, cb){
-  userId = Mongo.ObjectID(userId);
-
-  books.find({userId:userId, tags:query.tag}).toArray(function(err, records){
-    cb(records);
-  });
-};
-
-Book.findByUserIdAndBookId = function(userId, bookId, cb){
+Book.find = function(userId, bookId, cb){
   userId = Mongo.ObjectID(userId);
   bookId = Mongo.ObjectID(bookId);
 
   books.findOne({_id:bookId, userId:userId}, function(err, record){
     cb(record);
+  });
+};
+
+Book.query = function(userId, query, cb){
+  userId = Mongo.ObjectID(userId);
+  query.userId = userId;
+
+  books.find(query).toArray(function(err, records){
+    cb(records);
   });
 };
 

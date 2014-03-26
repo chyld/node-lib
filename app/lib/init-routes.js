@@ -30,6 +30,7 @@ function load(app, fn){
   app.get('/books/:id', d, books.show);
   app.post('/books/:id', d, books.update);
   app.get('/books/:id/edit', d, books.edit);
+  app.get('/books/:id/mark', d, books.mark);
   app.get('/books/stream/:id/:filename', d, books.stream);
   console.log('Routes Loaded');
   fn();

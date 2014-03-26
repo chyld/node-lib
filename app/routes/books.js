@@ -24,6 +24,12 @@ exports.create = function(req, res){
   });
 };
 
+exports.show = function(req, res){
+  Book.findByUserIdAndBookId(req.session.userId, req.params.id, function(book){
+    res.render('books/show', {title: 'Show', book: book});
+  });
+};
+
 exports.edit = function(req, res){
   Book.findByUserIdAndBookId(req.session.userId, req.params.id, function(book){
     res.render('books/edit', {title: 'Edit', book: book});
@@ -33,13 +39,13 @@ exports.edit = function(req, res){
 exports.update = function(req, res){
   Book.findByUserIdAndBookId(req.session.userId, req.params.id, function(book){
     Book.update(req.body, book, function(){
-      res.redirect('/books');
+      res.redirect('/books/' + book._id);
     });
   });
 };
 
 exports.stream = function(req, res){
-  Book.findByUserIdAndBookId(req.session.userId, req.params.bookId, function(book){
+  Book.findByUserIdAndBookId(req.session.userId, req.params.id, function(book){
     Book.getStream(book, req.params.filename, function(stream, type, length){
       res.setHeader('Content-Type', type);
       res.setHeader('Content-Length', length);

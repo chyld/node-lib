@@ -52,7 +52,7 @@ Book.query = function(userId, query, cb){
   userId = Mongo.ObjectID(userId);
   query.userId = userId;
 
-  books.find(query).toArray(function(err, records){
+  books.find(query).sort({'released': 1, 'title': 1}).toArray(function(err, records){
     cb(records);
   });
 };

@@ -4,13 +4,13 @@ var Book = require('../models/book');
 
 exports.index = function(req, res){
   Book.query(req.session.userId, {}, function(books){
-    res.render('books/index', {title: 'Books', books: books});
+    res.render('books/index', {title: 'Book List', books: books});
   });
 };
 
 exports.query = function(req, res){
   Book.query(req.session.userId, req.query, function(books){
-    res.render('books/index', {title: 'Books', books: books});
+    res.render('books/index', {title: 'Book Query', books: books});
   });
 };
 
@@ -44,10 +44,10 @@ exports.update = function(req, res){
   });
 };
 
-exports.mark = function(req, res){
+exports.shelf = function(req, res){
   Book.find(req.session.userId, req.params.id, function(book){
-    Book.mark(book, function(){
-      res.redirect('/books/' + book._id);
+    Book.shelf(book, function(){
+      res.redirect('/books/query?shelf=t');
     });
   });
 };

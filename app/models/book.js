@@ -31,8 +31,8 @@ Book.update = function(obj, book, cb){
   });
 };
 
-Book.mark = function(book, cb){
-  book.mark = (book.mark && book.mark === 't') ? 'f' : 't';
+Book.shelf = function(book, cb){
+  book.shelf = (book.shelf && book.shelf === 't') ? 'f' : 't';
 
   save(book, function(){
     cb();

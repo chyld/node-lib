@@ -22,11 +22,13 @@ html(lang='en')
             if user
               li: a(href="/books/new") Add
               li: a(href="/books") Books
-              li: a(href="/books/query?mark=t") Shelf
+              li: a(href="/books/query?shelf=t") Shelf
               li: a(href="/logout")= user.email
             else
               li: a(href="/users/new") Register
               li: a(href="/login") Login
+    #title
+      h1= title
     .container-fluid
       .row
         .col-xs-12

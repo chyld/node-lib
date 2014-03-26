@@ -8,8 +8,8 @@ block content
       a.btn.btn-success.btn-xs.btn-block(href='/books/') Back
     .edit
       a.btn.btn-warning.btn-xs.btn-block(href='/books/' + book._id + '/edit') Edit
-    .mark
-      a.btn.btn-primary.btn-xs.btn-block(href='/books/' + book._id + '/mark') Mark
+    .shelf
+      a.btn.btn-primary.btn-xs.btn-block(href='/books/' + book._id + '/shelf') Shelf
     .tags
       each tag in book.tags
         a.btn.btn-info.btn-xs(href='/books/query?tags=' + tag)= tag

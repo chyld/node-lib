@@ -32,9 +32,9 @@ html(lang='en')
       - query = query || ''
       - if(typeof query === 'object')
       -   delete query.userId
-      - var subtitle = typeof query === 'object' ? util.format("%j", query) : ''
+      - var subtitle = typeof query === 'object' ? ' : ' + util.format("%j", query) : ''
 
-      h1= title + ' : ' + subtitle
+      h1= title + subtitle
     .container-fluid
       .row
         .col-xs-12

@@ -27,6 +27,7 @@ function load(app, fn){
   app.post('/books', d, books.create);
   app.get('/books', d, books.index);
   app.get('/books/query', d, books.query);
+  app.get('/books/admin', d, books.admin);
   app.get('/books/:id', d, books.show);
   app.post('/books/:id', d, books.update);
   app.get('/books/:id/edit', d, books.edit);

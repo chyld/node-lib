@@ -1,0 +1,22 @@
+extends ../shared/template
+
+block content
+  - var keys = ['_id', 'authors', 'cover', 'data', 'edition', 'isbn10', 'isbn13', 'publisher', 'released', 'shelf', 'summary', 'tags', 'thumb', 'title', 'userId'];
+  .row
+    .col-xs-12
+      .table-responsive
+        table.table.table-striped.table-bordered
+          thead
+            tr
+              th image
+              th count
+              each key in keys
+                th= key
+          tbody
+            each book in books
+              - var count = Object.keys(book).length
+              tr
+                td: img(src=book.cover[0], width='35', height='50')
+                td= count
+                each key in keys
+                  td= book[key]

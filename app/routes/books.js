@@ -8,6 +8,12 @@ exports.index = function(req, res){
   });
 };
 
+exports.admin = function(req, res){
+  Book.query(req.session.userId, {}, function(books){
+    res.render('books/admin', {title: 'Book Administration', books: books});
+  });
+};
+
 exports.query = function(req, res){
   Book.query(req.session.userId, req.query, function(books){
     res.render('books/index', {title: 'Book Query', books: books});
@@ -57,8 +63,6 @@ exports.stream = function(req, res){
     Book.getStream(book, req.params.filename, function(stream, type, length){
       res.setHeader('Content-Type', type);
       res.setHeader('Content-Length', length);
-      res.setHeader('Cache-Control', 'public, max-age=0');
-      res.setHeader('ETag', length);
       try{stream.pipe(res);}catch(e){}
     });
   });

@@ -1,15 +1,33 @@
 extends ../shared/template
 
 block content
-  .book
-    a(href=book.data[0])
-      .cover(style="background-image:url('" + book.cover[0] + "');")
-    .back
-      a.btn.btn-success.btn-xs.btn-block(href='/books/') Back
-    .edit
-      a.btn.btn-warning.btn-xs.btn-block(href='/books/' + book._id + '/edit') Edit
-    .shelf
-      a.btn.btn-primary.btn-xs.btn-block(href='/books/' + book._id + '/shelf') Shelf
-    .tags
-      each tag in book.tags
-        a.btn.btn-info.btn-xs(href='/books/query?tags=' + tag)= tag
+  .row
+    .col-xs-6.col-md-3
+      .book
+        a(href=book.data[0])
+          .cover(style="background-image:url('" + book.cover[0] + "');")
+    .col-xs-6.col-md-9
+      h1: small Main
+      ul
+        li: a(href='/books/') All Books
+        li: a(href='/books/' + book._id + '/edit') Edit Book
+        li: a(href='/books/' + book._id + '/shelf') The Bookshelf
+      h1: small Tags
+      ul
+        each tag in book.tags
+          li: a(href='/books/query?tags=' + tag)= tag
+  .row
+    .col-xs-12
+      .table-responsive
+        - var keys = Object.keys(book).sort()
+        table.table.table-striped.table-bordered
+          thead
+            tr
+              th Count
+              each key in keys
+                th= key
+          tbody
+            tr
+              td= keys.length
+              each key in keys
+                td= book[key]

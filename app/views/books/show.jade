@@ -10,24 +10,10 @@ block content
       h1: small Main
       ul
         li: a(href='/books/') All Books
+        li: a(href='/books/admin') Book Administration
         li: a(href='/books/' + book._id + '/edit') Edit Book
         li: a(href='/books/' + book._id + '/shelf') The Bookshelf
       h1: small Tags
       ul
         each tag in book.tags
           li: a(href='/books/query?tags=' + tag)= tag
-  .row
-    .col-xs-12
-      .table-responsive
-        - var keys = Object.keys(book).sort()
-        table.table.table-striped.table-bordered
-          thead
-            tr
-              th Count
-              each key in keys
-                th= key
-          tbody
-            tr
-              td= keys.length
-              each key in keys
-                td= book[key]

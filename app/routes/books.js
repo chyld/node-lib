@@ -1,6 +1,7 @@
 'use strict';
 
 var Book = require('../models/book');
+var util = require('util');
 
 exports.index = function(req, res){
   Book.query(req.session.userId, {}, function(books){
@@ -16,7 +17,7 @@ exports.admin = function(req, res){
 
 exports.query = function(req, res){
   Book.query(req.session.userId, req.query, function(books){
-    res.render('books/index', {title: 'Book Query', books: books});
+    res.render('books/index', {title: 'Book Query', books: books, query: req.query, util: util});
   });
 };
 

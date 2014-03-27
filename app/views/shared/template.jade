@@ -29,7 +29,12 @@ html(lang='en')
               li: a(href="/users/new") Register
               li: a(href="/login") Login
     #title
-      h1= title
+      - query = query || ''
+      - if(typeof query === 'object')
+      -   delete query.userId
+      - var subtitle = typeof query === 'object' ? util.format("%j", query) : ''
+
+      h1= title + ' : ' + subtitle
     .container-fluid
       .row
         .col-xs-12

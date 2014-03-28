@@ -33,7 +33,7 @@ exports.create = function(req, res){
 
 exports.show = function(req, res){
   Book.find(req.session.userId, req.params.id, function(book){
-    res.render('books/show', {title: 'Show', book: book});
+    res.render('books/show', {title: book.title, book: book});
   });
 };
 
